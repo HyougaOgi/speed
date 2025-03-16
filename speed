@@ -1,0 +1,31 @@
+#!/bin/bash
+
+execute_command=""
+
+avg() {
+    for v in "$@"; do
+        execute_command="${execute_command} $v"
+    done
+}
+avg "$@"
+echo "#################"
+echo "time command"
+echo "#################"
+time eval ${execute_command}
+echo "#################"
+echo
+echo
+echo
+echo "#################"
+echo "calc"
+echo "#################"
+start_time=$(date +%s.%N)
+eval "${execute_command}"
+end_time=$(date +%s.%N)
+execution_time=$(echo "$end_time - $start_time" | bc)
+echo "#################"
+echo "TIME"
+echo "#################"
+echo "Execution time: ${execution_time} seconds"
+echo "#################"
+
