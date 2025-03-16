@@ -1,17 +1,16 @@
 #!/bin/bash
 
-execute_command=""
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 command [arguments...]"
+    exit 1
+fi
 
-avg() {
-    for v in "$@"; do
-        execute_command="${execute_command} $v"
-    done
-}
-avg "$@"
+
+cmd=("$@")
 echo "#################"
 echo "time command"
 echo "#################"
-time eval ${execute_command}
+time "${cmd[@]}"
 echo "#################"
 echo
 echo
@@ -20,7 +19,7 @@ echo "#################"
 echo "calc"
 echo "#################"
 start_time=$(date +%s.%N)
-eval "${execute_command}"
+"${cmd[@]}"
 end_time=$(date +%s.%N)
 execution_time=$(echo "$end_time - $start_time" | bc)
 echo "#################"
@@ -28,4 +27,3 @@ echo "TIME"
 echo "#################"
 echo "Execution time: ${execution_time} seconds"
 echo "#################"
-
